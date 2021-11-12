@@ -1,0 +1,62 @@
+<!Doctype html>
+<html>
+	<head>
+		<title>Simple Slider</title>
+		<link rel="stylesheet" href="style.css">		
+	</head>
+	<body>
+		<div class="gallery">
+			<h2>Photo Slider</h2>
+			<div class="slider">
+				<ul>
+					<li><img src="img/a.jpg" class="slides" alt="Image1" width="400px" height="400px"></li>
+					<li><img src="img/b.jpg" class="slides" alt="Image2" width="400px" height="400px"></li>
+					<li><img src="img/c.jpg" class="slides" alt="Image3" width="400px" height="400px"></li>
+					<li><img src="img/b.jpg" class="slides" alt="Image4" width="400px" height="400px"></li>
+					<li><img src="img/a.jpg" class="slides" alt="Image1" width="400px" height="400px"></li>
+					<li><img src="img/b.jpg" class="slides" alt="Image2" width="400px" height="400px"></li>
+					<li><img src="img/c.jpg" class="slides" alt="Image3" width="400px" height="400px"></li>
+					<li><img src="img/b.jpg" class="slides" alt="Image4" width="400px" height="400px"></li>
+				</ul>
+			</div>
+			<div id="slider-nav">
+				<button data-dir="prev">Previous</button>
+				<button data-dir="next" style="float:right;">Next</button>
+			</div>
+		</div>
+		<script src="jquery.js"></script>
+		<script src="test.js"></script>
+		<script>
+			
+			jQuery(document).ready(function ($) {
+				var container=$('div.slider')
+											.css('overflow','hidden')
+											.children('ul');
+				
+				
+				$('.gallery').hover(function( e ){
+					$('#slider-nav').toggle();
+					return e.type=='mouseenter'?clearInterval(intv):autoSlider();
+				});
+				
+				var sliderobj= new slider(container,$('#slider-nav'));
+				
+				sliderobj.nav.find('button').on('click', function(){
+					sliderobj.setCurrentPos($(this).data('dir'));
+					sliderobj.transition();
+				});
+				
+				autoSlider();
+				
+				function autoSlider()
+				{
+					return intv = setInterval(function(){
+						sliderobj.setCurrentPos('next');
+						sliderobj.transition();
+					}, 2000);
+				}
+				
+			});
+		</script>
+	</body>
+</html>
